@@ -20,7 +20,7 @@
                     <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
                 {% endif %}
                 {% if current_user.is_authenticated and current_user.role == 'admin' %}
-                <a href="{{ url_for('admin_panel') }}" class="btn btn-dark ms-3">Admin Panel</a>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-dark ms-3">Admin Panel</a>
                 {% endif %}
 
             </div>

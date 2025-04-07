@@ -182,69 +182,67 @@ def update_order(order_id):
         return redirect(url_for('orders'))
     return render_template('update_order.html', order=order)
 
-# Admin routes
+####   ADMIN PANEL ####
+
+
+from functools import wraps
+
 def admin_required(f):
-    @login_required
-    def wrapper(*args, **kwargs):
-        if current_user.role != 'admin':
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.role != 'admin':
             abort(403)
         return f(*args, **kwargs)
-    wrapper.__name__ = f.__name__
-    return wrapper
+    return decorated_function
+
 
 @app.route('/admin')
+@login_required
 @admin_required
-def admin_panel():
+def admin_dashboard():
     users = User.query.all()
     products = Product.query.all()
     orders = Order.query.all()
+    return render_template('dashboard.html', users=users, products=products, orders=orders)
 
-    # Read log content safely
-    log_content = ""
-    try:
-        with open('app.log', 'r') as f:
-            log_content = f.read()
-    except FileNotFoundError:
-        log_content = "Log file not found."
-
-    return render_template(
-        'admin_panel.html',
-        users=users,
-        products=products,
-        orders=orders,
-        log_content=log_content
-    )
-
-
-@app.route('/admin/add-user', methods=['GET', 'POST'])
+@app.route('/admin/create-user', methods=['GET', 'POST'])
+@login_required
 @admin_required
-def add_user():
+def create_user():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         role = request.form['role']
+
+        # Check if username already exists
         if User.query.filter_by(username=username).first():
-            return "User already exists"
+            flash("Username already exists!", "danger")
+            return redirect(url_for('create_user'))
+
         new_user = User(username=username, role=role)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('admin_panel'))
-    return render_template('add_user.html')
+        flash("User created successfully!", "success")
+        return redirect(url_for('admin_dashboard'))
+    return render_template('create_user.html')
 
-@app.route('/admin/delete-user/<int:user_id>')
+@app.route('/admin/delete-user/<int:user_id>', methods=['POST'])
+@login_required
 @admin_required
 def delete_user(user_id):
+    if current_user.id == user_id:
+        flash("You can't delete yourself!", "warning")
+        return redirect(url_for('admin_dashboard'))
+    
     user = User.query.get_or_404(user_id)
-    if user.username == 'admin':
-        return "Can't delete the main admin."
     db.session.delete(user)
     db.session.commit()
-    return redirect(url_for('admin_panel'))
-
-from functools import wraps
-from flask import abort
+    flash("User deleted.", "success")
+    return redirect(url_for('admin_dashboard'))
 
 
+
+### END #####
 if __name__ == '__main__':
     app.run(debug=True)
