@@ -4,9 +4,9 @@
 {% block title %} Product Tracking System {% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light btn-outline-danger">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('index') }}">MyPTS</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}"></a>
         <div class="d-flex">
             {% if current_user.is_authenticated %}
                 <span class="me-3">Logged in as: {{ current_user.username }}</span>
