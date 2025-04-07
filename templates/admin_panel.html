@@ -3,37 +3,36 @@
 {% block title %} Admin Panel {% endblock %}
 
 {% block body %}
-<body>
-    <div class="container mt-5">
-        <h2>Admin Dashboard</h2>
-        <p>Welcome, {{ current_user.username }} 👑</p>
+<div class="container mt-5">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome, {{ current_user.username }} 👑</p>
 
-        <h4 class="mt-4">Users</h4>
-        <table class="table table-bordered">
-            <thead><tr><th>ID</th><th>Username</th><th>Role</th></tr></thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.role }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h4 class="mt-4">Products</h4>
-        <ul>
-            {% for product in products %}
-                <li>{{ product.name }} - {{ product.specification }}</li>
+    <h4 class="mt-4">Users</h4>
+    <table class="table table-bordered">
+        <thead><tr><th>ID</th><th>Username</th><th>Role</th></tr></thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.role }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </tbody>
+    </table>
 
-        <h4 class="mt-4">Orders</h4>
-        <ul>
-            {% for order in orders %}
-                <li>Order #{{ order.id }} - {{ order.status }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h4 class="mt-4">Products</h4>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - {{ product.specification }}</li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="mt-4">Orders</h4>
+    <ul>
+        {% for order in orders %}
+            <li>Order #{{ order.id }} - {{ order.status }}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
