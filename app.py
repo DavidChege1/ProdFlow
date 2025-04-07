@@ -171,7 +171,16 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
+@app.route('/update-order/<int:order_id>', methods=['GET', 'POST'])
+@login_required
+def update_order(order_id):
+    order = Order.query.get_or_404(order_id)
+    if request.method == 'POST':
+        order.quantity = request.form['quantity']
+        order.status = request.form['status']
+        db.session.commit()
+        return redirect(url_for('orders'))
+    return render_template('update_order.html', order=order)
 
 if __name__ == '__main__':
     app.run(debug=True)

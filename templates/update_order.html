@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Update Order {% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2>Update Order</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="quantity" value="{{ order.quantity }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status">
+                    <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Processing" {% if order.status == 'Processing' %}selected{% endif %}>Processing</option>
+                    <option value="Completed" {% if order.status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ url_for('orders') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
