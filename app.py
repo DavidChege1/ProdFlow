@@ -198,26 +198,52 @@ def admin_panel():
     users = User.query.all()
     products = Product.query.all()
     orders = Order.query.all()
-    return render_template('admin_panel.html', users=users, products=products, orders=orders)
+
+    # Read log content safely
+    log_content = ""
+    try:
+        with open('app.log', 'r') as f:
+            log_content = f.read()
+    except FileNotFoundError:
+        log_content = "Log file not found."
+
+    return render_template(
+        'admin_panel.html',
+        users=users,
+        products=products,
+        orders=orders,
+        log_content=log_content
+    )
 
 
-def admin_required(f):
-    @login_required
-    def wrapper(*args, **kwargs):
-        if current_user.role != 'admin':
-            abort(403)
-        return f(*args, **kwargs)
-    wrapper.__name__ = f.__name__
-    return wrapper
-
-@app.route('/admin')
+@app.route('/admin/add-user', methods=['GET', 'POST'])
 @admin_required
-def admin_panel():
-    users = User.query.all()
-    products = Product.query.all()
-    orders = Order.query.all()
-    return render_template('admin_panel.html', users=users, products=products, orders=orders)
+def add_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        role = request.form['role']
+        if User.query.filter_by(username=username).first():
+            return "User already exists"
+        new_user = User(username=username, role=role)
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('admin_panel'))
+    return render_template('add_user.html')
 
+@app.route('/admin/delete-user/<int:user_id>')
+@admin_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.username == 'admin':
+        return "Can't delete the main admin."
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('admin_panel'))
+
+from functools import wraps
+from flask import abort
 
 
 if __name__ == '__main__':

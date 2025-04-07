@@ -35,4 +35,13 @@
         {% endfor %}
     </ul>
 </div>
+<h4 class="mt-4">Logs</h4>
+<pre style="background:#f8f9fa; padding:10px; border:1px solid #ccc;">
+{% with open('app.log') as log_file %}
+    {{ log_file.read() }}
+{% endwith %}
+</pre>
+<h3>Application Logs</h3>
+<pre style="max-height: 300px; overflow-y: auto;">{{ log_content }}</pre>
+
 {% endblock %}
