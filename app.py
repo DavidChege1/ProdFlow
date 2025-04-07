@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_bcrypt import Bcrypt
+from functools import wraps
+
 
 app = Flask(__name__)
 app.secret_key = '123'  # Required for Flask-Login
@@ -184,8 +186,6 @@ def update_order(order_id):
 
 ####   ADMIN PANEL ####
 
-
-from functools import wraps
 
 def admin_required(f):
     @wraps(f)
