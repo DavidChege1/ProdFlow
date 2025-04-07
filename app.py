@@ -200,8 +200,6 @@ def admin_panel():
     orders = Order.query.all()
     return render_template('admin_panel.html', users=users, products=products, orders=orders)
 
-from flask import abort
-from flask_login import current_user
 
 def admin_required(f):
     @login_required
