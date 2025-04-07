@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %} BOM - {{ product.name }} {% endblock %}
+
+{% block body %}
+<body>
+<div class="container mt-5">
+    <h2>Bill of Materials for: <span class="text-primary">{{ product.name }}</span></h2>
+
+    <!-- Add BOM Form -->
+    <div class="card my-4">
+        <div class="card-header">Add Component</div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <input type="text" class="form-control" name="component_name" placeholder="Component name" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <input type="int" class="form-control" name="quantity" placeholder="Quantity" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success w-100">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- BOM Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in bom_items %}
+                <tr>
+                    <td>{{ item.component_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_bom', id=item.id) }}" onsubmit="return confirm('Delete this component?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Back to Products</a>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+// Custom Variables (optional if using SCSS properly compiled)
+$primary-color: #0d6efd;  // Bootstrap Primary Blue
+$light-bg: #f8f9fa;
+$card-border: #dee2e6;
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: $light-bg;
+  margin: 0;
+  padding: 0;
+  color: #212529;
+}
+
+// Overall Title/Header
+.header-title {
+  background-color: $light-bg;
+  padding: 2rem 0;
+  border-bottom: 1px solid $card-border;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+
+  &.btn-info {
+    background-color: #0dcaf0;
+    border: none;
+
+    &:hover {
+      background-color: #31d2f2;
+    }
+  }
+
+  &.btn-warning {
+    color: #212529;
+  }
+}
+
+// Card Customizations
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  background-color: $primary-color;
+  color: white;
+  font-weight: 600;
+}
+
+// Product List
+.list-group-item {
+  padding: 1rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #eef3f7;
+  }
+}
+
+// Edit Product Page Styles
+.edit-product {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #0d6efd;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+  
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+    }
+  
+    .form-control {
+      border-radius: 8px;
+    }
+  
+    .btn {
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+  
+      &.btn-primary {
+        background-color: #0d6efd;
+        border: none;
+      }
+  
+      &.btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+  
