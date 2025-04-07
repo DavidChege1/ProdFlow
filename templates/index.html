@@ -4,6 +4,18 @@
 {% block title %} Product Tracking System {% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('index') }}">MyPTS</a>
+        <div class="d-flex">
+            {% if current_user.is_authenticated %}
+                <span class="me-3">Logged in as: {{ current_user.username }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
     <!-- Overall Title -->
 <div class="bg-light py-4 mb-4 border-bottom">
     <div class="container text-center">

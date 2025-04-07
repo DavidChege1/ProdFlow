@@ -93,4 +93,13 @@ body {
   background-color: #6c757d;
   border: none;
   margin-left: 0.5rem;
+}
+
+.btn-outline-danger {
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+}
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
 }/*# sourceMappingURL=styles.css.map */

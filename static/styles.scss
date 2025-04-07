@@ -117,3 +117,12 @@ body {
     }
   }
   
+  .btn-outline-danger {
+    font-weight: bold;
+    padding: 0.4rem 1rem;
+    &:hover {
+      background-color: #dc3545;
+      color: #fff;
+    }
+  }
+  
