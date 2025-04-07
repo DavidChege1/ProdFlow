@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, flash
+from flask import Flask, request, jsonify, render_template, redirect, url_for, flash , abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_bcrypt import Bcrypt
@@ -181,6 +181,46 @@ def update_order(order_id):
         db.session.commit()
         return redirect(url_for('orders'))
     return render_template('update_order.html', order=order)
+
+# Admin routes
+def admin_required(f):
+    @login_required
+    def wrapper(*args, **kwargs):
+        if current_user.role != 'admin':
+            abort(403)
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
+
+@app.route('/admin')
+@admin_required
+def admin_panel():
+    users = User.query.all()
+    products = Product.query.all()
+    orders = Order.query.all()
+    return render_template('admin_panel.html', users=users, products=products, orders=orders)
+
+from flask import abort
+from flask_login import current_user
+
+def admin_required(f):
+    @login_required
+    def wrapper(*args, **kwargs):
+        if current_user.role != 'admin':
+            abort(403)
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
+
+@app.route('/admin')
+@admin_required
+def admin_panel():
+    users = User.query.all()
+    products = Product.query.all()
+    orders = Order.query.all()
+    return render_template('admin_panel.html', users=users, products=products, orders=orders)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -19,6 +19,10 @@
                     <span class="me-3">Logged in as: {{ current_user.username }}</span>
                     <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
                 {% endif %}
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <a href="{{ url_for('admin_panel') }}" class="btn btn-dark ms-3">Admin Panel</a>
+                {% endif %}
+
             </div>
         </div>
     </nav>
