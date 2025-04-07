@@ -1,2 +1,3 @@
 # Product Tracking System
-![Alt Text](images\1.png)
+[![App Screenshot](images/1.png)](images/1.png)
+
