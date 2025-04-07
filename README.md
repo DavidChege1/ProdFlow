@@ -8,6 +8,7 @@ MyPTS (Product Tracking System) is a web-based inventory and order management ap
 🔐 User Authentication
 Secure login system with role-based access (e.g. admin, user).
 [![App Screenshot](images/3.png)](images/3.png)
+[![App Screenshot](images/5.png)](images/5.png)
 
 
 📦 Product Management
