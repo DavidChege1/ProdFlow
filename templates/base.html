@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light btn-outline-danger">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}"></a>
+            <div class="d-flex">
+                {% if current_user.is_authenticated %}
+                    <span class="me-3">Logged in as: {{ current_user.username }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
     {% block body %}
     {% endblock %}
 </body>

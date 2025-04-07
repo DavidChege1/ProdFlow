@@ -73,6 +73,7 @@ def index():
     return render_template('index.html', products=products)
 
 @app.route('/add-product', methods=['POST'])
+@login_required
 def add_product():
     name = request.form['name']
     specification = request.form['specification']
@@ -82,6 +83,7 @@ def add_product():
     return redirect(url_for('index'))
 
 @app.route('/delete-product/<int:id>', methods=['POST'])
+@login_required
 def delete_product(id):
     product = Product.query.get_or_404(id)
     db.session.delete(product)
@@ -89,6 +91,7 @@ def delete_product(id):
     return redirect(url_for('index'))
 
 @app.route('/update-product/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update_product(id):
     product = Product.query.get_or_404(id)
     if request.method == 'POST':
@@ -99,6 +102,7 @@ def update_product(id):
     return render_template('update_product.html', product=product)
 
 @app.route('/product/<int:product_id>/bom', methods=['GET', 'POST'])
+@login_required
 def manage_bom(product_id):
     product = Product.query.get_or_404(product_id)
 
@@ -114,6 +118,7 @@ def manage_bom(product_id):
     return render_template('bom.html', product=product, bom_items=bom_items)
 
 @app.route('/delete-bom/<int:id>', methods=['POST'])
+@login_required
 def delete_bom(id):
     item = BillOfMaterial.query.get_or_404(id)
     product_id = item.product_id
@@ -122,12 +127,14 @@ def delete_bom(id):
     return redirect(url_for('manage_bom', product_id=product_id))
 
 @app.route('/orders')
+@login_required
 def orders():
     all_orders = Order.query.order_by(Order.order_date.desc()).all()
     products = Product.query.all()
     return render_template('orders.html', orders=all_orders, products=products)
 
 @app.route('/add-order', methods=['POST'])
+@login_required
 def add_order():
     product_id = request.form['product_id']
     quantity = request.form['quantity']
@@ -137,6 +144,7 @@ def add_order():
     return redirect(url_for('orders'))
 
 @app.route('/update-order-status/<int:order_id>', methods=['POST'])
+@login_required
 def update_order_status(order_id):
     order = Order.query.get_or_404(order_id)
     order.status = request.form['status']
